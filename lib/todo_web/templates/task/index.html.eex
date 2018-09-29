@@ -1,0 +1,31 @@
+<h1>Tasks</h1>
+
+<%= form_for @changeset, task_path(@conn, :create), fn f -> %>
+  <div class='form-group'>
+    <label>Name</label>
+    <%= text_input f, :description, class: 'form-control' %>
+  </div>
+
+  <%= submit "Submit", class: 'btn btn-primary' %>
+<% end %>
+
+<table class="table">
+  <thead>
+    <th>Description</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <%= for task <- @tasks do %>
+      <tr>
+        <td><%= task.description %></td>
+        <td>
+          <%= link "Delete",
+              to: task_path(@conn, :delete, task),
+              method: :delete,
+              data: [confirm: "Are you sure?"],
+              class: "btn btn-danger pull-right" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
